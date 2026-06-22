@@ -30,13 +30,14 @@ const CooldownScreen = (() => {
 
                 <div class="next-card">
                     <span class="next-label">NEXT UP</span>
-                    ${nextExercise
-                        ? `<span class="next-name">${nextExercise.name}</span>
-                           <div class="diagram-placeholder diagram-sm">
-                               <span class="diagram-label">Diagram</span>
-                           </div>`
-                        : `<span class="next-name">Final exercise done!</span>`
-                    }
+                    ${nextExercise ? (() => {
+                        const imgs = ExerciseData.getImages(nextExercise.id);
+                        return `<span class="next-name">${nextExercise.name}</span>
+                                ${imgs.length
+                                    ? `<img class="exercise-img exercise-img--sm" src="${imgs[0]}" alt="${nextExercise.name}">`
+                                    : `<div class="diagram-placeholder diagram-sm"><span class="diagram-label">Diagram</span></div>`
+                                }`;
+                    })() : `<span class="next-name">Final exercise done!</span>`}
                 </div>
 
                 <button id="skipBtn" class="skip-button" touch-action="manipulation">tap to skip</button>

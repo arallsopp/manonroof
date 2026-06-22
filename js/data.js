@@ -100,5 +100,34 @@ const ExerciseData = (() => {
         } catch (_) { return []; }
     }
 
-    return { load, getConfig, getActiveExercises, updateExercise, setCooldown, reset, saveWorkout, getHistory };
+    // ── Image map ──────────────────────────────────────────────────────────
+    // Images are never stored to localStorage — always sourced from here.
+    // Multi-image exercises cycle at 500ms intervals on the exercise screen.
+    const IMAGE_MAP = {
+        pushups:           ['images/pushups.png'],
+        shoulder_taps:     ['images/shoulder_taps.png'],
+        commandos:         ['images/commandos.png'],
+        lat_pull_pushup:   ['images/lat_pull_pushup_1.png', 'images/lat_pull_pushup_2.png', 'images/lat_pull_pushup_3.png'],
+        plank_toe_touches: ['images/plank_toe_touches.png'],
+        calf_hops:         ['images/calf_hops.png'],
+        crunch_pause:      ['images/crunch_pause.png'],
+        oblique_r:         ['images/oblique_r.png'],
+        oblique_l:         ['images/oblique_l.png'],
+        twisting_tabletop: ['images/twisting_tabletop.png'],
+        reverse_crunch:    ['images/reverse_crunch.png'],
+        leg_hip_lift:      ['images/leg_hip_lift.png'],
+        plank_knee_tucks:  ['images/plank_knee_tucks.png'],
+        frog_extensions:   ['images/frog_extensions.png'],
+        skullcrusher:      ['images/skullcrusher.png'],
+        mountain_climbers: ['images/mountain_climbers.png'],
+        lateral_pushup:    ['images/lateral_pushup.png'],
+        plank_rows:        ['images/plank_rows.png'],
+        superman_hold:     ['images/superman_hold.png'],
+    };
+
+    function getImages(id) {
+        return IMAGE_MAP[id] || [];
+    }
+
+    return { load, getConfig, getActiveExercises, updateExercise, setCooldown, reset, saveWorkout, getHistory, getImages };
 })();

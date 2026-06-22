@@ -111,6 +111,21 @@ html, body {
     aspect-ratio: 4 / 3;
 }
 
+.exercise-img {
+    width: 100%;
+    max-width: 320px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.exercise-img--sm {
+    max-width: 200px;
+    max-height: 130px;
+    margin-top: 4px;
+}
+
 /* ─── Home ───────────────────────────────────────────── */
 
 .screen-home {

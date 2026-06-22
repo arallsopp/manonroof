@@ -2,19 +2,23 @@
  * ExerciseScreen — singleton
  *
  * One DONE tap per exercise. SKIP in the header jumps to next exercise.
- * Both buttons are disabled immediately on press to prevent accidental double-fire.
+ * Both buttons are disabled immediately on press to prevent double-fire.
  *
- * Hold exercises: countdown timer shown as a guide; tap DONE when finished.
+ * Multi-image exercises cycle through their frames every 500ms.
+ * Hold exercises show a countdown timer as a guide.
  */
 
 const ExerciseScreen = (() => {
-    let _holdInterval = null;
+    let _holdInterval  = null;
+    let _imageInterval = null;
 
     function render(exercise, exerciseIndex, totalExercises) {
-        _stopHoldTimer();
+        _stopTimers();
 
-        const isHold = exercise.type === 'hold';
+        const isHold   = exercise.type === 'hold';
         const repLabel = isHold ? `${exercise.reps} seconds` : `${exercise.reps} reps`;
+        const images   = ExerciseData.getImages(exercise.id);
+        const hasImg   = images.length > 0;
 
         document.getElementById('app').innerHTML = `
             <div class="screen screen-exercise">
@@ -32,9 +36,10 @@ const ExerciseScreen = (() => {
                 <div class="exercise-info">
                     <h1 class="exercise-name">${exercise.name}</h1>
                     <p class="exercise-reps">${repLabel}</p>
-                    <div class="diagram-placeholder">
-                        <span class="diagram-label">Diagram</span>
-                    </div>
+                    ${hasImg
+                        ? `<img id="exerciseImg" class="exercise-img" src="${images[0]}" alt="${exercise.name}">`
+                        : `<div class="diagram-placeholder"><span class="diagram-label">Diagram</span></div>`
+                    }
                     ${isHold ? `
                         <div class="hold-display">
                             <span id="holdTimer" class="hold-seconds">${exercise.reps}</span>
@@ -50,7 +55,8 @@ const ExerciseScreen = (() => {
         document.getElementById('btnSkip').addEventListener('click', _onSkip);
         document.getElementById('btnQuit').addEventListener('click', _onQuit);
 
-        if (isHold) _startHoldTimer(exercise.reps);
+        if (images.length > 1) _startImageCycle(images);
+        if (isHold)            _startHoldTimer(exercise.reps);
     }
 
     function _lockButton(id) {
@@ -62,30 +68,37 @@ const ExerciseScreen = (() => {
     }
 
     function _onDone() {
-        // Disable immediately — prevents rapid-tap advancing past this screen
         _lockButton('tapBtn');
         _lockButton('btnSkip');
-        _stopHoldTimer();
+        _stopTimers();
         WorkoutController.tap();
     }
 
     function _onSkip() {
         _lockButton('btnSkip');
         _lockButton('tapBtn');
-        _stopHoldTimer();
+        _stopTimers();
         WorkoutController.skip();
     }
 
     function _onQuit() {
         _lockButton('btnQuit');
         if (confirm('Quit workout?')) {
-            _stopHoldTimer();
+            _stopTimers();
             WorkoutController.goHome();
         } else {
-            // Re-enable if they cancel
             const btn = document.getElementById('btnQuit');
             if (btn) { btn.disabled = false; btn.style.pointerEvents = ''; btn.style.opacity = ''; }
         }
+    }
+
+    function _startImageCycle(images) {
+        let idx = 0;
+        _imageInterval = setInterval(() => {
+            idx = (idx + 1) % images.length;
+            const img = document.getElementById('exerciseImg');
+            if (img) img.src = images[idx];
+        }, 500);
     }
 
     function _startHoldTimer(totalSecs) {
@@ -96,18 +109,17 @@ const ExerciseScreen = (() => {
             const el = document.getElementById('holdTimer');
             if (el) el.textContent = remaining;
             if (remaining === 0) {
-                _stopHoldTimer();
+                clearInterval(_holdInterval);
+                _holdInterval = null;
                 const btn = document.getElementById('tapBtn');
                 if (btn) btn.classList.add('tap-button--ready');
             }
         }, 1000);
     }
 
-    function _stopHoldTimer() {
-        if (_holdInterval) {
-            clearInterval(_holdInterval);
-            _holdInterval = null;
-        }
+    function _stopTimers() {
+        if (_holdInterval)  { clearInterval(_holdInterval);  _holdInterval  = null; }
+        if (_imageInterval) { clearInterval(_imageInterval); _imageInterval = null; }
     }
 
     return { render };
