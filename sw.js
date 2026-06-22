@@ -3,7 +3,7 @@
  * Bump CACHE_NAME when assets change to force a fresh install.
  */
 
-const CACHE_NAME = 'workout-v4';
+const CACHE_NAME = 'workout-v5';
 
 const ASSETS = [
     '/index.html',
@@ -18,29 +18,29 @@ const ASSETS = [
     '/js/screens/cooldown.js',
     '/js/screens/complete.js',
     '/js/screens/settings.js',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png',
-    '/images/pushups.png',
-    '/images/shoulder_taps.png',
-    '/images/commandos.png',
-    '/images/lat_pull_pushup_1.png',
-    '/images/lat_pull_pushup_2.png',
-    '/images/lat_pull_pushup_3.png',
-    '/images/plank_toe_touches.png',
-    '/images/calf_hops.png',
-    '/images/crunch_pause.png',
-    '/images/oblique_r.png',
-    '/images/oblique_l.png',
-    '/images/twisting_tabletop.png',
-    '/images/reverse_crunch.png',
-    '/images/leg_hip_lift.png',
-    '/images/plank_knee_tucks.png',
-    '/images/frog_extensions.png',
-    '/images/skullcrusher.png',
-    '/images/mountain_climbers.png',
-    '/images/lateral_pushup.png',
-    '/images/plank_rows.png',
-    '/images/superman_hold.png',
+    '/icons/icon-192.jpg',
+    '/icons/icon-512.jpg',
+    '/images/pushups.jpg',
+    '/images/shoulder_taps.jpg',
+    '/images/commandos.jpg',
+    '/images/lat_pull_pushup_1.jpg',
+    '/images/lat_pull_pushup_2.jpg',
+    '/images/lat_pull_pushup_3.jpg',
+    '/images/plank_toe_touches.jpg',
+    '/images/calf_hops.jpg',
+    '/images/crunch_pause.jpg',
+    '/images/oblique_r.jpg',
+    '/images/oblique_l.jpg',
+    '/images/twisting_tabletop.jpg',
+    '/images/reverse_crunch.jpg',
+    '/images/leg_hip_lift.jpg',
+    '/images/plank_knee_tucks.jpg',
+    '/images/frog_extensions.jpg',
+    '/images/skullcrusher.jpg',
+    '/images/mountain_climbers.jpg',
+    '/images/lateral_pushup.jpg',
+    '/images/plank_rows.jpg',
+    '/images/superman_hold.jpg',
 ];
 
 self.addEventListener('install', e => {
