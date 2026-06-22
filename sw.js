@@ -1,12 +1,11 @@
 /**
  * Service Worker — cache-first offline strategy.
- * Bump CACHE_NAME when assets change to force a refresh.
+ * Bump CACHE_NAME when assets change to force a fresh install.
  */
 
-const CACHE_NAME = 'workout-v2';
+const CACHE_NAME = 'workout-v3';
 
 const ASSETS = [
-    '/',
     '/index.html',
     '/manifest.json',
     '/css/style.css',
@@ -25,9 +24,14 @@ const ASSETS = [
 
 self.addEventListener('install', e => {
     e.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(ASSETS))
-            .then(() => self.skipWaiting())
+        caches.open(CACHE_NAME).then(cache =>
+            // Cache each asset individually — one failure won't abort the rest.
+            Promise.all(
+                ASSETS.map(url =>
+                    cache.add(url).catch(err => console.warn('[SW] failed to cache', url, err))
+                )
+            )
+        ).then(() => self.skipWaiting())
     );
 });
 
@@ -42,6 +46,17 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+    // For full-page navigations, always serve index.html from cache.
+    // This handles '/', any hash route, and cold starts while offline.
+    if (e.request.mode === 'navigate') {
+        e.respondWith(
+            caches.match('/index.html')
+                .then(cached => cached || fetch(e.request))
+        );
+        return;
+    }
+
+    // For everything else (JS, CSS, images): cache-first.
     e.respondWith(
         caches.match(e.request)
             .then(cached => cached || fetch(e.request))
