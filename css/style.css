@@ -1,0 +1,598 @@
+/* =====================================================
+   Workout PWA — iPhone-first dark theme
+   ===================================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+:root {
+    --accent:        #ff6b35;
+    --accent-dark:   #cc5220;
+    --bg:            #0f0f0f;
+    --surface:       #1c1c1e;
+    --surface2:      #2c2c2e;
+    --text:          #ffffff;
+    --muted:         #8e8e93;
+    --green:         #30d158;
+    --safe-top:      env(safe-area-inset-top,    0px);
+    --safe-bottom:   env(safe-area-inset-bottom, 20px);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+#app {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── Shared ─────────────────────────────────────────── */
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    padding-top: var(--safe-top);
+    overflow: hidden;
+}
+
+.screen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    min-height: 52px;
+    flex-shrink: 0;
+}
+
+.screen-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.header-spacer {
+    width: 40px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    touch-action: manipulation;
+    transition: background 0.15s;
+}
+
+.btn-icon:active { background: var(--surface2); }
+.btn-icon svg    { width: 22px; height: 22px; }
+
+.diagram-placeholder {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 16 / 9;
+    border: 1.5px dashed var(--surface2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.diagram-label {
+    font-size: 12px;
+    color: var(--surface2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.diagram-sm {
+    max-width: 180px;
+    aspect-ratio: 4 / 3;
+}
+
+/* ─── Home ───────────────────────────────────────────── */
+
+.screen-home {
+    background: var(--bg);
+    justify-content: space-between;
+}
+
+.home-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+}
+
+.home-badge {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: var(--text);
+}
+
+.home-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.meta-dot { opacity: 0.4; }
+
+.home-last {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 4px 0 0;
+}
+
+.primary-button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding-top: 26px;
+    padding-bottom: calc(26px + var(--safe-bottom));
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    touch-action: manipulation;
+    transition: background 0.1s, transform 0.08s;
+}
+
+.primary-button:active {
+    background: var(--accent-dark);
+    transform: scale(0.99);
+}
+
+/* ─── Exercise ───────────────────────────────────────── */
+
+.screen-exercise {
+    background: var(--bg);
+}
+
+.exercise-pos {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    cursor: pointer;
+    touch-action: manipulation;
+    min-width: 60px;
+    text-align: right;
+}
+
+.btn-text:active { opacity: 0.5; }
+
+.exercise-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px 0;
+    gap: 14px;
+    min-height: 0;
+}
+
+.exercise-name {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+}
+
+.exercise-reps {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 500;
+}
+
+
+.hold-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.hold-seconds {
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--green);
+    font-variant-numeric: tabular-nums;
+}
+
+.hold-unit {
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.tap-button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    width: 100%;
+    flex: 0 0 42%;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    cursor: pointer;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: var(--safe-bottom);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.08s;
+}
+
+.tap-button:active {
+    background: var(--accent-dark);
+}
+
+/* Ripple flash on tap */
+.tap-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+}
+
+.tap-button:active::after { opacity: 0.12; }
+
+/* When hold timer reaches 0, pulse the button */
+.tap-button--ready {
+    animation: pulse-btn 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse-btn {
+    0%, 100% { background: var(--accent); }
+    50%       { background: var(--green); }
+}
+
+/* ─── Cooldown ───────────────────────────────────────── */
+
+.screen-cooldown {
+    background: var(--bg);
+    align-items: stretch;
+}
+
+.cooldown-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 16px;
+}
+
+.cooldown-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.cooldown-timer-wrap { line-height: 1; }
+
+.cooldown-count {
+    font-size: 120px;
+    font-weight: 900;
+    letter-spacing: -6px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    line-height: 1;
+}
+
+.cooldown-progress-wrap {
+    padding: 0 24px 8px;
+    flex-shrink: 0;
+}
+
+.progress-track {
+    height: 5px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+.progress-pct {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.next-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 24px;
+    flex-shrink: 0;
+}
+
+.next-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.next-name {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.skip-button {
+    background: var(--surface);
+    color: var(--muted);
+    border: none;
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: calc(18px + var(--safe-bottom));
+    font-size: 15px;
+    cursor: pointer;
+    touch-action: manipulation;
+    flex-shrink: 0;
+    transition: background 0.1s;
+}
+
+.skip-button:active { background: var(--surface2); }
+
+/* ─── Complete ───────────────────────────────────────── */
+
+.screen-complete {
+    background: var(--bg);
+    justify-content: space-between;
+}
+
+.complete-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.complete-check {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.complete-title {
+    font-size: 42px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.complete-sub {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0;
+}
+
+.complete-time {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    margin: 8px 0 0;
+}
+
+.complete-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.secondary-button {
+    background: var(--surface);
+    color: var(--muted);
+    border: none;
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: calc(18px + var(--safe-bottom));
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.1s;
+}
+
+.secondary-button:active { background: var(--surface2); }
+
+/* ─── Settings ───────────────────────────────────────── */
+
+.screen-settings {
+    background: var(--bg);
+}
+
+.settings-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(24px + var(--safe-bottom));
+}
+
+.settings-section { margin-bottom: 28px; }
+
+.settings-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+    padding: 16px 16px 8px;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--surface);
+    background: var(--bg);
+}
+
+.settings-name {
+    flex: 1;
+    font-size: 16px;
+    transition: opacity 0.2s;
+}
+
+.settings-name--off { opacity: 0.35; }
+
+/* iOS-style toggle */
+.toggle-wrap {
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.toggle-wrap input { display: none; }
+
+.toggle-track {
+    display: block;
+    width: 44px;
+    height: 26px;
+    background: var(--surface2);
+    border-radius: 13px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+
+.toggle-wrap input:checked ~ .toggle-track             { background: var(--green); }
+.toggle-wrap input:checked ~ .toggle-track::after      { transform: translateX(18px); }
+
+/* Stepper (rep count adjuster) */
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.stepper-btn {
+    background: var(--surface2);
+    color: var(--text);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.1s;
+}
+
+.stepper-btn:active { background: var(--accent); }
+
+.stepper-val {
+    font-size: 15px;
+    font-weight: 600;
+    min-width: 34px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.reset-button {
+    display: block;
+    background: none;
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 12px 24px;
+    margin: 8px 16px 0;
+    width: calc(100% - 32px);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.1s;
+}
+
+.reset-button:active { background: rgba(255,59,48,0.1); }
