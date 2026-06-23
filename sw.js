@@ -3,7 +3,7 @@
  * Bump CACHE_NAME when assets change to force a fresh install.
  */
 
-const CACHE_NAME = 'workout-v5';
+const CACHE_NAME = 'workout-v6';
 
 const ASSETS = [
     '/index.html',
@@ -35,11 +35,17 @@ const ASSETS = [
     '/images/reverse_crunch.jpg',
     '/images/leg_hip_lift.jpg',
     '/images/plank_knee_tucks.jpg',
-    '/images/frog_extensions.jpg',
+    '/images/frog_extensions_1.jpg',
+    '/images/frog_extensions_2.jpg',
     '/images/skullcrusher.jpg',
+    '/images/skullcrusher_2.jpg',
     '/images/mountain_climbers.jpg',
-    '/images/lateral_pushup.jpg',
+    '/images/mountain_climbers_2.jpg',
+    '/images/lateral_pushup_1.jpg',
+    '/images/lateral_pushup_2.jpg',
+    '/images/lateral_pushup_3.jpg',
     '/images/plank_rows.jpg',
+    '/images/plank_rows_2.jpg',
     '/images/superman_hold.jpg',
 ];
 

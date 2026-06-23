@@ -117,11 +117,11 @@ const ExerciseData = (() => {
         reverse_crunch:    ['images/reverse_crunch.jpg'],
         leg_hip_lift:      ['images/leg_hip_lift.jpg'],
         plank_knee_tucks:  ['images/plank_knee_tucks.jpg'],
-        frog_extensions:   ['images/frog_extensions.jpg'],
-        skullcrusher:      ['images/skullcrusher.jpg'],
-        mountain_climbers: ['images/mountain_climbers.jpg'],
-        lateral_pushup:    ['images/lateral_pushup.jpg'],
-        plank_rows:        ['images/plank_rows.jpg'],
+        frog_extensions:   ['images/frog_extensions_1.jpg', 'images/frog_extensions_2.jpg'],
+        skullcrusher:      ['images/skullcrusher.jpg', 'images/skullcrusher_2.jpg'],
+        mountain_climbers: ['images/mountain_climbers.jpg', 'images/mountain_climbers_2.jpg'],
+        lateral_pushup:    ['images/lateral_pushup_1.jpg', 'images/lateral_pushup_2.jpg', 'images/lateral_pushup_3.jpg'],
+        plank_rows:        ['images/plank_rows.jpg', 'images/plank_rows_2.jpg'],
         superman_hold:     ['images/superman_hold.jpg'],
     };
 
